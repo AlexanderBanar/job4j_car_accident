@@ -1,0 +1,2 @@
+[![Build Status](https://app.travis-ci.com/AlexanderBanar/job4j_car_accident.svg?branch=master)](https://app.travis-ci.com/AlexanderBanar/job4j_car_accident)
+[![codecov](https://codecov.io/gh/AlexanderBanar/job4j_car_accident/branch/master/graph/badge.svg?token=DDY5Z4L14H)](https://codecov.io/gh/AlexanderBanar/job4j_car_accident)
