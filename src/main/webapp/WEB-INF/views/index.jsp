@@ -15,15 +15,37 @@
         <thead class="thead-dark">
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">UserName</th>
+            <th scope="col">Заявитель</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">ГосНомер</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Фото</th>
+            <th scope="col">Статус</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="item" items="${list}" varStatus="loopCounter" >
+        <c:forEach var="item" items="${map}" varStatus="loopCounter" >
             <tr>
-                <th>${loopCounter.count}</th>
                 <td>
-                        ${item}
+                        ${item.value.id}
+                </td>
+                <td>
+                        ${item.value.name}
+                </td>
+                <td>
+                        ${item.value.address}
+                </td>
+                <td>
+                        ${item.value.number}
+                </td>
+                <td>
+                        ${item.value.description}
+                </td>
+                <td>
+                        Здесь скоро будет фото
+                </td>
+                <td>
+                        ${item.value.status}
                 </td>
             </tr>
         </c:forEach>
