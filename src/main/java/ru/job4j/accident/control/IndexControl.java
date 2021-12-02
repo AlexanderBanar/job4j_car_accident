@@ -7,10 +7,11 @@ import ru.job4j.accident.repository.AccidentMem;
 
 @Controller
 public class IndexControl {
+    AccidentMem accidentMem = new AccidentMem();
+
     @GetMapping("/")
     public String index(Model model) {
-        AccidentMem accidentMem = new AccidentMem();
-        model.addAttribute("map", accidentMem.getAccidents());
+        model.addAttribute("list", accidentMem.getAccidents());
         return "index";
     }
 }

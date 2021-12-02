@@ -24,28 +24,28 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="item" items="${map}" varStatus="loopCounter" >
+        <c:forEach var="item" items="${list}" varStatus="loopCounter" >
             <tr>
                 <td>
-                        ${item.value.id}
+                        ${item.id}
                 </td>
                 <td>
-                        ${item.value.name}
+                        ${item.name}
                 </td>
                 <td>
-                        ${item.value.address}
+                        ${item.address}
                 </td>
                 <td>
-                        ${item.value.number}
+                        ${item.number}
                 </td>
                 <td>
-                        ${item.value.description}
+                        ${item.description}
                 </td>
                 <td>
                         Здесь скоро будет фото
                 </td>
                 <td>
-                        ${item.value.status}
+                        ${item.status}
                 </td>
             </tr>
         </c:forEach>
