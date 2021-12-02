@@ -11,7 +11,7 @@ import java.util.Map;
 public class AccidentMem {
     private Map<Integer, Accident> accidents = new HashMap<>();
 
-     {
+    public AccidentMem() {
         Accident accident1 = Accident.of(1, "Иван", "Москва", "Д503ДД",
                 "неправильная парковка", "Принята");
         Accident accident2 = Accident.of(2, "Сергей", "Казань", "Р404РР",
