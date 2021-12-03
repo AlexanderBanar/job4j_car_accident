@@ -19,4 +19,12 @@ public class AccidentService {
     public Collection<Accident> getAccidents() {
         return accidentMem.getAccidents();
     }
+
+    public void create(Accident accident) {
+        accidentMem.create(accident);
+    }
+
+    public void edit(Accident accident) {
+        accidentMem.edit(accident);
+    }
 }
