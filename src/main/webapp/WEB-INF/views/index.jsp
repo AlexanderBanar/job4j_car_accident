@@ -37,7 +37,7 @@
                 </td>
 
                 <td>
-                    <a href='<c:url value="/edit?id=${item.id}"/>'>редактировать</a>
+                    <a href='<c:url value="/update?id=${item.id}"/>'>редактировать</a>
                 </td>
 
                 <td>
