@@ -5,7 +5,7 @@
 <form  action="<c:url value='/updateSave?id=${accident.id}'/>" method='POST'>
     <table>
         <tr>
-            <td><label>ID
+            <td><label>ID (для инфо)
                 <input type='text' name='${accident.id}' placeholder="${accident.id}" readonly>
             </label></td>
         </tr>
