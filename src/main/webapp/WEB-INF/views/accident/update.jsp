@@ -6,31 +6,31 @@
     <table>
         <tr>
             <td><label>ID (для инфо)
-                <input type='text' name='${accident.id}' placeholder="${accident.id}" readonly>
+                <input type='text' name='${accident.id}' value="${accident.id}" readonly>
             </label></td>
         </tr>
 
         <tr>
             <td><label>Заявитель (ФИО)
-                <input type='text' name='name' placeholder="${accident.name}">
+                <input type='text' name='name' value="${accident.name}">
             </label></td>
         </tr>
 
         <tr>
             <td><label>Адрес нарушения
-                <input type='text' name='address' placeholder="${accident.address}">
+                <input type='text' name='address' value="${accident.address}">
             </label></td>
         </tr>
 
         <tr>
             <td><label>ГосНомер
-                <input type='text' name='number' placeholder="${accident.number}">
+                <input type='text' name='number' value="${accident.number}">
             </label></td>
         </tr>
 
         <tr>
             <td><label>Описание нарушения
-                <input type='text' name='description' placeholder="${accident.description}">
+                <input type='text' name='description' value="${accident.description}">
             </label></td>
         </tr>
 
