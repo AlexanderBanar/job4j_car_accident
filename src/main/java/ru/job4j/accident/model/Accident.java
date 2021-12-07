@@ -10,7 +10,10 @@ public class Accident {
     private String description;
     private String status;
 
-    public static Accident of(int id, String name, String address, String number, String description, String status) {
+    private AccidentType type;
+
+    public static Accident of(int id, String name, String address, String number, String description, String status,
+                              AccidentType type) {
         Accident accident = new Accident();
         accident.id = id;
         accident.name = name;
@@ -18,6 +21,7 @@ public class Accident {
         accident.number = number;
         accident.description = description;
         accident.status = status;
+        accident.type = type;
         return accident;
     }
 
@@ -67,6 +71,14 @@ public class Accident {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public AccidentType getType() {
+        return type;
+    }
+
+    public void setType(AccidentType type) {
+        this.type = type;
     }
 
     @Override

@@ -27,6 +27,7 @@
             <th scope="col">Описание</th>
             <th scope="col">Фото</th>
             <th scope="col">Статус</th>
+            <th scope="col">Тип</th>
         </tr>
         </thead>
         <tbody>
@@ -62,6 +63,10 @@
 
                 <td>
                         ${item.status}
+                </td>
+
+                <td>
+                        ${item.type.name}
                 </td>
 
             </tr>
