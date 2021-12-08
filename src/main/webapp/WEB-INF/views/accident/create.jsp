@@ -36,6 +36,7 @@
                         <option value="${type.id}">${type.name}</option>
                     </c:forEach>
                 </select>
+            </td>
         </tr>
 
         <tr>

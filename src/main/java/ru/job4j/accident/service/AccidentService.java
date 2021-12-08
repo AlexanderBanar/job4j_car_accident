@@ -35,6 +35,6 @@ public class AccidentService {
     }
 
     public Map<Integer, AccidentType> getTypes() {
-        return accidentMem.getTypes();
+        return accidentMem.getTypesMap();
     }
 }

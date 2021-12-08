@@ -9,6 +9,7 @@ import java.util.*;
 @Repository
 public class AccidentMem {
     private Map<Integer, Accident> accidents = new HashMap<>();
+    private Map<Integer, AccidentType> typesMap = new HashMap<>();
     private int counter = 1;
 
     public AccidentMem() {
@@ -24,6 +25,9 @@ public class AccidentMem {
         accidents.put(counter++, accident1);
         accidents.put(counter++, accident2);
         accidents.put(counter++, accident3);
+        typesMap.put(1, AccidentType.of(1, "Две машины"));
+        typesMap.put(2, AccidentType.of(2, "Машина и человек"));
+        typesMap.put(3, AccidentType.of(3, "Машина и велосипед"));
     }
 
     public Collection<Accident> getAccidents() {
@@ -44,11 +48,7 @@ public class AccidentMem {
         return accidents.get(id);
     }
 
-    public Map<Integer, AccidentType> getTypes() {
-        Map<Integer, AccidentType> typesMap = new HashMap<>();
-        typesMap.put(1, AccidentType.of(1, "Две машины"));
-        typesMap.put(2, AccidentType.of(2, "Машина и человек"));
-        typesMap.put(3, AccidentType.of(3, "Машина и велосипед"));
+    public Map<Integer, AccidentType> getTypesMap() {
         return typesMap;
     }
 }
