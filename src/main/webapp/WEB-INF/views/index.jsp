@@ -28,6 +28,7 @@
             <th scope="col">Фото</th>
             <th scope="col">Статус</th>
             <th scope="col">Тип</th>
+            <th scope="col">Статья</th>
         </tr>
         </thead>
         <tbody>
@@ -67,6 +68,12 @@
 
                 <td>
                         ${item.type.name}
+                </td>
+
+                <td>
+                        <c:forEach var="rule" items="${item.rules}" >
+                            ${rule.name} <br>
+                        </c:forEach>
                 </td>
 
             </tr>

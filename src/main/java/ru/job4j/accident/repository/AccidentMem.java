@@ -3,6 +3,7 @@ package ru.job4j.accident.repository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 
 import java.util.*;
 
@@ -10,24 +11,40 @@ import java.util.*;
 public class AccidentMem {
     private Map<Integer, Accident> accidents = new HashMap<>();
     private Map<Integer, AccidentType> typesMap = new HashMap<>();
+    private Map<Integer, Rule> rulesMap = new HashMap<>();
     private int counter = 1;
 
     public AccidentMem() {
-        Accident accident1 = Accident.of(1, "Иван", "Москва", "Д503ДД",
+        Set<Rule> rules1 = new HashSet<>();
+        rules1.add(Rule.of(1, "Статья. 1"));
+        rules1.add(Rule.of(3, "Статья. 3"));
+
+        Set<Rule> rules2 = new HashSet<>();
+        rules2.add(Rule.of(3, "Статья. 3"));
+
+        Set<Rule> rules3 = new HashSet<>();
+        rules3.add(Rule.of(2, "Статья. 2"));
+        rules3.add(Rule.of(3, "Статья. 3"));
+
+        accidents.put(counter, Accident.of(counter++, "Иван", "Москва", "Д503ДД",
                 "неправильная парковка", "Принята",
-                AccidentType.of(1, "Машина и человек"));
-        Accident accident2 = Accident.of(2, "Сергей", "Казань", "Р404РР",
+                AccidentType.of(2, "Машина и человек"), rules1));
+
+        accidents.put(counter, Accident.of(counter++, "Сергей", "Казань", "Р404РР",
                 "затонирована задняя полусфера", "Отклонена",
-                AccidentType.of(1, "Две машины"));
-        Accident accident3 = Accident.of(3, "Антон", "Воронеж", "Н111НН",
+                AccidentType.of(1, "Две машины"), rules2));
+
+        accidents.put(counter, Accident.of(counter++, "Антон", "Воронеж", "Н111НН",
                 "отсутствие шипованных шин", "Завершена",
-                AccidentType.of(1, "Машина и велосипед"));
-        accidents.put(counter++, accident1);
-        accidents.put(counter++, accident2);
-        accidents.put(counter++, accident3);
+                AccidentType.of(3, "Машина и велосипед"), rules3));
+
         typesMap.put(1, AccidentType.of(1, "Две машины"));
         typesMap.put(2, AccidentType.of(2, "Машина и человек"));
         typesMap.put(3, AccidentType.of(3, "Машина и велосипед"));
+
+        rulesMap.put(1, Rule.of(1, "Статья. 1"));
+        rulesMap.put(2, Rule.of(2, "Статья. 2"));
+        rulesMap.put(3, Rule.of(3, "Статья. 3"));
     }
 
     public Collection<Accident> getAccidents() {
@@ -48,7 +65,11 @@ public class AccidentMem {
         return accidents.get(id);
     }
 
-    public Map<Integer, AccidentType> getTypesMap() {
-        return typesMap;
+    public Collection<AccidentType> getTypesList() {
+        return typesMap.values();
+    }
+
+    public Collection<Rule> getRulesList() {
+        return rulesMap.values();
     }
 }
