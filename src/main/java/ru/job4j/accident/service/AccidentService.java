@@ -9,6 +9,7 @@ import ru.job4j.accident.repository.AccidentMem;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class AccidentService {
@@ -41,5 +42,13 @@ public class AccidentService {
 
     public Collection<Rule> getRules() {
         return accidentMem.getRulesList();
+    }
+
+    public AccidentType getAccidentType(int typeId) {
+        return accidentMem.getAccidentType(typeId);
+    }
+
+    public Set<Rule> getRuleSet(int[] rIds) {
+        return accidentMem.getRuleSet(rIds);
     }
 }

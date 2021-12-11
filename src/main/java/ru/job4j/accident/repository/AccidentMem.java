@@ -6,13 +6,14 @@ import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem {
     private Map<Integer, Accident> accidents = new HashMap<>();
     private Map<Integer, AccidentType> typesMap = new HashMap<>();
     private Map<Integer, Rule> rulesMap = new HashMap<>();
-    private int counter = 1;
+    private AtomicInteger counter = new AtomicInteger(0);
 
     public AccidentMem() {
         Set<Rule> rules1 = new HashSet<>();
@@ -26,15 +27,18 @@ public class AccidentMem {
         rules3.add(Rule.of(2, "Статья. 2"));
         rules3.add(Rule.of(3, "Статья. 3"));
 
-        accidents.put(counter, Accident.of(counter++, "Иван", "Москва", "Д503ДД",
+        int count1 = counter.incrementAndGet();
+        accidents.put(count1, Accident.of(count1, "Иван", "Москва", "Д503ДД",
                 "неправильная парковка", "Принята",
                 AccidentType.of(2, "Машина и человек"), rules1));
 
-        accidents.put(counter, Accident.of(counter++, "Сергей", "Казань", "Р404РР",
+        int count2 = counter.incrementAndGet();
+        accidents.put(count2, Accident.of(count2, "Сергей", "Казань", "Р404РР",
                 "затонирована задняя полусфера", "Отклонена",
                 AccidentType.of(1, "Две машины"), rules2));
 
-        accidents.put(counter, Accident.of(counter++, "Антон", "Воронеж", "Н111НН",
+        int count3 = counter.incrementAndGet();
+        accidents.put(count3, Accident.of(count3, "Антон", "Воронеж", "Н111НН",
                 "отсутствие шипованных шин", "Завершена",
                 AccidentType.of(3, "Машина и велосипед"), rules3));
 
@@ -52,7 +56,7 @@ public class AccidentMem {
     }
 
     public void create(Accident accident) {
-        int id = counter++;
+        int id = counter.incrementAndGet();
         accident.setId(id);
         accidents.put(id, accident);
     }
@@ -71,5 +75,27 @@ public class AccidentMem {
 
     public Collection<Rule> getRulesList() {
         return rulesMap.values();
+    }
+
+    public AccidentType getAccidentType(int typeId) {
+        AccidentType accidentType = new AccidentType();
+        for (AccidentType ac : getTypesList()) {
+            if (ac.getId() == typeId) {
+                accidentType = ac;
+            }
+        }
+        return accidentType;
+    }
+
+    public Set<Rule> getRuleSet(int[] rIds) {
+        Set<Rule> ruleSet = new HashSet<>();
+        for (int id : rIds) {
+            for (Rule rule : getRulesList()) {
+                if (rule.getId() == id) {
+                    ruleSet.add(rule);
+                }
+            }
+        }
+        return ruleSet;
     }
 }

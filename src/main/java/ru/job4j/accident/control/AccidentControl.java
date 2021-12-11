@@ -9,12 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class AccidentControl {
@@ -35,8 +30,8 @@ public class AccidentControl {
     @PostMapping("/save")
     public String save(@RequestParam("type.id") int typeId, @RequestParam("rIds") int[] rIds,
                        @ModelAttribute Accident accident) {
-        accident.setType(getAccidentType(typeId));
-        accident.setRules(getRuleSet(rIds));
+        accident.setType(service.getAccidentType(typeId));
+        accident.setRules(service.getRuleSet(rIds));
         accident.setStatus("Принята");
         service.create(accident);
         return "redirect:/";
@@ -53,32 +48,10 @@ public class AccidentControl {
     @PostMapping("/updateSave")
     public String updateSave(@RequestParam("type.id") int typeId, @RequestParam("rIds") int[] rIds,
                              @ModelAttribute Accident accident) {
-        accident.setType(getAccidentType(typeId));
-        accident.setRules(getRuleSet(rIds));
+        accident.setType(service.getAccidentType(typeId));
+        accident.setRules(service.getRuleSet(rIds));
         accident.setStatus("Принята");
         service.edit(accident);
         return "redirect:/";
-    }
-
-    private AccidentType getAccidentType(int typeId) {
-        AccidentType accidentType = new AccidentType();
-        for (AccidentType ac : service.getTypes()) {
-            if (ac.getId() == typeId) {
-                accidentType = ac;
-            }
-        }
-        return accidentType;
-    }
-
-    private Set<Rule> getRuleSet(int[] rIds) {
-        Set<Rule> ruleSet = new HashSet<>();
-        for (int id : rIds) {
-            for (Rule rule : service.getRules()) {
-                if (rule.getId() == id) {
-                    ruleSet.add(rule);
-                }
-            }
-        }
-        return ruleSet;
     }
 }
