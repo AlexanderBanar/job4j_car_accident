@@ -78,23 +78,13 @@ public class AccidentMem {
     }
 
     public AccidentType getAccidentType(int typeId) {
-        AccidentType accidentType = new AccidentType();
-        for (AccidentType ac : getTypesList()) {
-            if (ac.getId() == typeId) {
-                accidentType = ac;
-            }
-        }
-        return accidentType;
+        return typesMap.get(typeId);
     }
 
     public Set<Rule> getRuleSet(int[] rIds) {
         Set<Rule> ruleSet = new HashSet<>();
         for (int id : rIds) {
-            for (Rule rule : getRulesList()) {
-                if (rule.getId() == id) {
-                    ruleSet.add(rule);
-                }
-            }
+            ruleSet.add(rulesMap.get(id));
         }
         return ruleSet;
     }
