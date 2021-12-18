@@ -35,6 +35,28 @@
         </tr>
 
         <tr>
+            <td>Тип</td>
+            <td>
+                <select name="type.id" required>
+                    <c:forEach var="type" items="${types}" >
+                        <option value="${type.id}">${type.name}</option>
+                    </c:forEach>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Статья(и)</td>
+            <td>
+                <select name="rIds" multiple required>
+                    <c:forEach var="rule" items="${rules}" >
+                        <option value="${rule.id}">${rule.name}</option>
+                    </c:forEach>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
             <td colspan='2'><input name="submit" type="submit" value="Сохранить" /></td>
         </tr>
     </table>

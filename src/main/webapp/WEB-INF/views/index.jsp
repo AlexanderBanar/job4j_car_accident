@@ -20,11 +20,13 @@
         <thead class="thead-dark">
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Редактировать</th>
+            <th scope="col">Изменить</th>
             <th scope="col">Заявитель</th>
             <th scope="col">Адрес</th>
             <th scope="col">ГосНомер</th>
             <th scope="col">Описание</th>
+            <th scope="col">Тип</th>
+            <th scope="col">Статьи</th>
         </tr>
         </thead>
         <tbody>
@@ -35,7 +37,7 @@
                 </td>
 
                 <td>
-                    <a href='<c:url value="/update?id=${item.id}"/>'>редактировать</a>
+                    <a href='<c:url value="/update?id=${item.id}"/>'>изменить</a>
                 </td>
 
                 <td>
@@ -52,6 +54,16 @@
 
                 <td>
                         ${item.description}
+                </td>
+
+                <td>
+                        ${item.type.name}
+                </td>
+
+                <td>
+                    <c:forEach var="rule" items="${item.rules}" >
+                        ${rule.name} <br>
+                    </c:forEach>
                 </td>
 
             </tr>

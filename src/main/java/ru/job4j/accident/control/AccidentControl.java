@@ -22,11 +22,16 @@ public class AccidentControl {
 
     @GetMapping("/create")
     public String create(Model model) {
+        model.addAttribute("types", service.getTypes());
+        model.addAttribute("rules", service.getRules());
         return "accident/create";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident) {
+    public String save(@RequestParam("type.id") int typeId, @RequestParam("rIds") int[] rIds,
+                       @ModelAttribute Accident accident) {
+        accident.setType(service.getAccidentType(typeId));
+        accident.setRules(service.getRuleSet(rIds));
         accident.setStatus("Принята");
         service.create(accident);
         return "redirect:/";
@@ -35,11 +40,16 @@ public class AccidentControl {
     @GetMapping("/update")
     public String update(@RequestParam("id") int id, Model model) {
         model.addAttribute("accident", service.findById(id));
+        model.addAttribute("rules", service.getRules());
+        model.addAttribute("types", service.getTypes());
         return "accident/update";
     }
 
     @PostMapping("/updateSave")
-    public String updateSave(@ModelAttribute Accident accident) {
+    public String updateSave(@RequestParam("type.id") int typeId, @RequestParam("rIds") int[] rIds,
+                             @ModelAttribute Accident accident) {
+        accident.setType(service.getAccidentType(typeId));
+        accident.setRules(service.getRuleSet(rIds));
         accident.setStatus("Принята");
         service.edit(accident);
         return "redirect:/";
