@@ -1,20 +1,16 @@
 package ru.job4j.accident.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 
 import java.util.*;
 
-@Repository
 public class AccidentJdbcTemplate {
     private final JdbcTemplate jdbc;
 
-    @Autowired
     public AccidentJdbcTemplate(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
@@ -23,7 +19,7 @@ public class AccidentJdbcTemplate {
         SortedMap<Integer, Accident> sortedAccidentMap = new TreeMap<>();
         Map<Integer, Set<Rule>> rulesMap = getDefinedRulesMap();
         SqlRowSet rs = jdbc.queryForRowSet(
-                "select * from auto_crash.public.accident as ac join auto_crash.public.types as typ "
+                "select * from auto_crash.public.accident as ac join auto_crash.public.type as typ "
                         + "on ac.type_id = typ.id");
         while (rs.next()) {
             Accident accident = new Accident();
@@ -46,7 +42,7 @@ public class AccidentJdbcTemplate {
     private Map<Integer, Set<Rule>> getDefinedRulesMap() {
         Map<Integer, Set<Rule>> rulesDefinedMap = new HashMap<>();
         Map<Integer, Rule> rulesMap = getRulesMap();
-        SqlRowSet rs = jdbc.queryForRowSet("select * from auto_crash.public.accidents_rules");
+        SqlRowSet rs = jdbc.queryForRowSet("select * from auto_crash.public.accident_rule");
         while (rs.next()) {
             int id = rs.getInt("accident_id");
             if (!rulesDefinedMap.containsKey(id)) {
@@ -81,7 +77,7 @@ public class AccidentJdbcTemplate {
                 .formatted(ac.getName(), ac.getAddress(), ac.getNumber(), ac.getDescription(),
                         ac.getStatus(), ac.getType().getId(), ac.getId());
         jdbc.update(sql1);
-        String sql2 = "delete from auto_crash.public.accidents_rules where accident_id = %d"
+        String sql2 = "delete from auto_crash.public.accident_rule where accident_id = %d"
                 .formatted(ac.getId());
         jdbc.update(sql2);
         insertRules(ac.getId(), ac.getRules());
@@ -89,7 +85,7 @@ public class AccidentJdbcTemplate {
 
     private void insertRules(int accidentId, Set<Rule> accidentRuleSet) {
         for (Rule rule : accidentRuleSet) {
-            String sql3 = "insert into auto_crash.public.accidents_rules(accident_id, rule_id) "
+            String sql3 = "insert into auto_crash.public.accident_rule(accident_id, rule_id) "
                     + "values (%d, %d)"
                             .formatted(accidentId, rule.getId());
             jdbc.update(sql3);
@@ -115,7 +111,7 @@ public class AccidentJdbcTemplate {
 
     public Map<Integer, AccidentType> getTypesMap() {
         Map<Integer, AccidentType> typesMap = new HashMap<>();
-        SqlRowSet rs = jdbc.queryForRowSet("select * from auto_crash.public.types");
+        SqlRowSet rs = jdbc.queryForRowSet("select * from auto_crash.public.type");
         while (rs.next()) {
             typesMap.put(rs.getInt("id"), AccidentType.of(
                     rs.getInt("id"),
@@ -127,7 +123,7 @@ public class AccidentJdbcTemplate {
 
     public Map<Integer, Rule> getRulesMap() {
         Map<Integer, Rule> rulesMap = new HashMap<>();
-        SqlRowSet rs = jdbc.queryForRowSet("select * from auto_crash.public.rules");
+        SqlRowSet rs = jdbc.queryForRowSet("select * from auto_crash.public.rule");
         while (rs.next()) {
             rulesMap.put(rs.getInt("id"),
                     Rule.of(

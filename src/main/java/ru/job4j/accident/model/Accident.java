@@ -1,21 +1,36 @@
 package ru.job4j.accident.model;
 
-import java.util.HashSet;
+import javax.persistence.*;
 import java.util.Objects;
+
+import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "accident")
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String address;
     private String number;
     private String description;
     private String status;
+
+    @OneToOne(cascade = {CascadeType.ALL})
     private AccidentType type;
-    private Set<Rule> rules = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "accident_rule",
+            joinColumns = @JoinColumn(name = "accident_id"),
+            inverseJoinColumns = @JoinColumn(name = "rule_id")
+    )
+    private Set<Rule> rulesSet = new HashSet<>();
 
     public static Accident of(int id, String name, String address, String number, String description, String status,
-                              AccidentType type, Set<Rule> rules) {
+                              AccidentType type, Set<Rule> rulesSet) {
         Accident accident = new Accident();
         accident.id = id;
         accident.name = name;
@@ -24,7 +39,7 @@ public class Accident {
         accident.description = description;
         accident.status = status;
         accident.type = type;
-        accident.rules = rules;
+        accident.rulesSet = rulesSet;
         return accident;
     }
 
@@ -85,11 +100,11 @@ public class Accident {
     }
 
     public Set<Rule> getRules() {
-        return rules;
+        return rulesSet;
     }
 
-    public void setRules(Set<Rule> rules) {
-        this.rules = rules;
+    public void setRules(Set<Rule> rulesSet) {
+        this.rulesSet = rulesSet;
     }
 
     @Override
