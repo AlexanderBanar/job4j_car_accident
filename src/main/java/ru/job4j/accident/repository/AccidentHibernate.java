@@ -23,24 +23,26 @@ public class AccidentHibernate {
         try (Session session = sf.openSession()) {
             Query query = session.createQuery(
                     "select distinct a from Accident a join fetch a.type "
-                    + "join fetch a.rulesSet"
+                    + "join fetch a.rulesSet order by a.id"
             );
             return query.list();
         }
     }
 
-    public void create(Accident accident) {
-        for (Rule rule : accident.getRules()) {
-            System.out.println(rule.getName());
-        }
+    public void create(Accident accident, int[] rIds) {
+        accident.setRules(getRuleSet(rIds));
         try (Session session = sf.openSession()) {
+            session.beginTransaction();
             session.save(accident);
+            session.getTransaction().commit();
         }
     }
 
     public void edit(Accident accident) {
         try (Session session = sf.openSession()) {
+            session.beginTransaction();
             session.update(accident);
+            session.getTransaction().commit();
         }
     }
 
@@ -64,7 +66,9 @@ public class AccidentHibernate {
         Map<Integer, Rule> rulesMap = new HashMap<>();
         List<Rule> list;
         try (Session session = sf.openSession()) {
-            Query query = session.createQuery("select distinct r from Rule r");
+            Query query = session.createQuery(
+                    "select distinct r from Rule r order by r.id"
+            );
             list = query.list();
         }
         for (Rule rule : list) {
@@ -77,7 +81,9 @@ public class AccidentHibernate {
         Map<Integer, AccidentType> typesMap = new HashMap<>();
         List<AccidentType> list;
         try (Session session = sf.openSession()) {
-            Query query = session.createQuery("select distinct actype from AccidentType actype");
+            Query query = session.createQuery(
+                    "select distinct a from AccidentType a order by a.id"
+            );
             list = query.list();
         }
         for (AccidentType type : list) {

@@ -107,6 +107,10 @@ public class Accident {
         this.rulesSet = rulesSet;
     }
 
+    public void addRule(Rule rule) {
+        this.rulesSet.add(rule);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

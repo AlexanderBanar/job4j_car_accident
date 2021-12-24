@@ -31,9 +31,8 @@ public class AccidentControl {
     public String save(@RequestParam("type.id") int typeId, @RequestParam("rIds") int[] rIds,
                        @ModelAttribute Accident accident) {
         accident.setType(service.getAccidentType(typeId));
-        accident.setRules(service.getRuleSet(rIds));
         accident.setStatus("Принята");
-        service.create(accident);
+        service.create(accident, rIds);
         return "redirect:/";
     }
 

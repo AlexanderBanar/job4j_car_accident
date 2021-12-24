@@ -24,8 +24,8 @@ public class AccidentService {
         return accidentHibernate.getAccidents();
     }
 
-    public void create(Accident accident) {
-        accidentHibernate.create(accident);
+    public void create(Accident accident, int[] rIds) {
+        accidentHibernate.create(accident, rIds);
     }
 
     public void edit(Accident accident) {
