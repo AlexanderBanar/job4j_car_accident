@@ -5,50 +5,68 @@ import org.springframework.stereotype.Service;
 
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.repository.AccidentHibernate;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.repository.AccidentRepository;
+import ru.job4j.accident.repository.AccidentTypeRepository;
+import ru.job4j.accident.repository.RuleRepository;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class AccidentService {
-    private AccidentHibernate accidentHibernate;
+    private AccidentRepository accidentRepository;
+    private AccidentTypeRepository accidentTypeRepository;
+    private RuleRepository ruleRepository;
 
     @Autowired
-    public AccidentService(AccidentHibernate accidentHibernate) {
-        this.accidentHibernate = accidentHibernate;
+    public AccidentService(AccidentRepository accidentRepository,
+                           AccidentTypeRepository accidentTypeRepository,
+                           RuleRepository ruleRepository) {
+        this.accidentRepository = accidentRepository;
+        this.accidentTypeRepository = accidentTypeRepository;
+        this.ruleRepository = ruleRepository;
     }
 
     public Collection<Accident> getAccidents() {
-        return accidentHibernate.getAccidents();
+        return (Collection<Accident>) accidentRepository.findAll();
     }
 
     public void create(Accident accident, int[] rIds) {
-        accidentHibernate.create(accident, rIds);
+        accident.setRules(getRuleSet(rIds));
+        accidentRepository.save(accident);
     }
 
     public void edit(Accident accident) {
-        accidentHibernate.edit(accident);
+        accidentRepository.save(accident);
     }
 
     public Accident findById(int id) {
-        return accidentHibernate.findById(id);
+        return accidentRepository.findById(id).orElse(null);
     }
 
     public Collection<Rule> getRules() {
-        return accidentHibernate.getRulesMap().values();
+        return (Collection<Rule>) ruleRepository.findAll();
     }
 
     public Collection<AccidentType> getTypes() {
-        return accidentHibernate.getTypesMap().values();
+        return (Collection<AccidentType>) accidentTypeRepository.findAll();
     }
 
     public AccidentType getAccidentType(int typeId) {
-        return accidentHibernate.getAccidentType(typeId);
+        return accidentTypeRepository.findById(typeId).orElse(null);
     }
 
     public Set<Rule> getRuleSet(int[] rIds) {
-        return accidentHibernate.getRuleSet(rIds);
+        List<Integer> idsList = IntStream.of(rIds).boxed().collect(Collectors.toList());
+        Set<Rule> ruleSet = new HashSet<>();
+        for (Rule rule : ruleRepository.findAllById(idsList)) {
+            ruleSet.add(rule);
+        }
+        return ruleSet;
     }
 }
