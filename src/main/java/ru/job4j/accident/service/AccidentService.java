@@ -33,7 +33,7 @@ public class AccidentService {
     }
 
     public Collection<Accident> getAccidents() {
-        return (Collection<Accident>) accidentRepository.findAll();
+        return accidentRepository.getAccidents();
     }
 
     public void create(Accident accident, int[] rIds) {
