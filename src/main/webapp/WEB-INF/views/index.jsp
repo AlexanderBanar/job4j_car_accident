@@ -11,9 +11,19 @@
 </head>
 <body>
 
+<br><br>
+
+<div class="container">
+    <p><a href="/accident/logout">Выйти (logout)</a></p>
+</div>
+
+<br><br>
+
 <div class="container">
     <p><a href="/accident/create">Создать новую заявку</a></p>
 </div>
+
+<br><br>
 
 <div class="container">
     <table class="table">
