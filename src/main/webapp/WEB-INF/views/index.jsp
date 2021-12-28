@@ -14,6 +14,7 @@
 <br><br>
 
 <div class="container">
+    <p>Вы вошли как ${user.username}</p>
     <p><a href="/accident/logout">Выйти (logout)</a></p>
 </div>
 
