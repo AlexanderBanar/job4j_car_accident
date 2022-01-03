@@ -26,13 +26,10 @@ public class RegControl {
 
     @PostMapping("/reg")
     public String regSave(@ModelAttribute User user, Model model) {
-        List<User> usersList = (List<User>) users.findAll();
-        for (User u : usersList) {
-            if (u.getUsername().equals((user.getUsername()))) {
-                String errorMessage = "user with this username is already registered";
-                model.addAttribute("errorMessage", errorMessage);
-                return "reg";
-            }
+        if (users.findByUsername(user.getUsername()) != null) {
+            String errorMessage = "user with this username is already registered";
+            model.addAttribute("errorMessage", errorMessage);
+            return "reg";
         }
         user.setEnabled(true);
         user.setPassword(encoder.encode(user.getPassword()));
